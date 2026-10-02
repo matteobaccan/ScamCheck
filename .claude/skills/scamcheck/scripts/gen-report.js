@@ -4,17 +4,20 @@
 //
 // ScamCheck helper (optional): fills report-template.html with the analysis data and writes the report HTML.
 //
-// Usage: node gen-report.js <data.json> <out.html> ["<generation date time>"] [template.html]
-//   data.json  analysis content, all visible strings already in the report language (see example-data.json)
-//   out.html   output file; put home.png (home page screenshot) in the same folder
+// Usage: node gen-report.js <data.json> <out.html> ["<generation date time>"] [template.html] [--log=<file>]
+//   data.json     analysis content, all visible strings already in the report language (see example-data.json)
+//   out.html      output file; put home.png (home page screenshot) in the same folder
 //   generation date/time defaults to now (YYYY-MM-DD HH:MM); template defaults to ../report-template.html
+//   --log=<file>  raw output of collect.sh (or of the manual commands): added as a "technical log" appendix
 //
 // Then convert with headless Chrome (see SKILL.md, "PDF report"). If this script fails, edit a copy of
 // report-template.html by hand following the same structure.
 
 const fs = require("fs"), path = require("path");
-const [dataFile, out, genArg, tplArg] = process.argv.slice(2);
-if (!dataFile || !out) { console.error("usage: node gen-report.js <data.json> <out.html> [\"date time\"] [template.html]"); process.exit(2); }
+const argv = process.argv.slice(2);
+const logArg = (argv.find(a => a.startsWith("--log=")) || "").slice(6);
+const [dataFile, out, genArg, tplArg] = argv.filter(a => !a.startsWith("--log="));
+if (!dataFile || !out) { console.error("usage: node gen-report.js <data.json> <out.html> [\"date time\"] [template.html] [--log=<file>]"); process.exit(2); }
 
 const tpl = tplArg || path.join(__dirname, "..", "report-template.html");
 const d = JSON.parse(fs.readFileSync(dataFile, "utf8"));
@@ -25,9 +28,30 @@ const gen = genArg || `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now
 for (const k of ["lang", "domain", "url", "analysisDate", "index", "verdict", "summary", "calc", "redflags", "checks", "positives", "todo", "limits", "sources", "t"])
   if (d[k] === undefined) { console.error(`data.json: missing "${k}"`); process.exit(3); }
 
+const html = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const esc = s => String(s).replace(/"/g, "&quot;");
 const cssStr = s => String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 const BS = "\\";
+
+// Technical log appendix: readable excerpt of the raw output (the full log is kept next to the PDF).
+const MAX_LINES = 230, MAX_COLS = 150;
+let logHtml = "";
+if (logArg) {
+  if (!fs.existsSync(logArg)) {
+    console.error(`log file not found: ${logArg} (report generated without appendix)`);
+  } else {
+    const lines = fs.readFileSync(logArg, "utf8").replace(/\r/g, "").split("\n")
+      .filter(l => !/^\s+DNS:/.test(l))                       // long certificate SAN lists
+      .map(l => (l.length > MAX_COLS ? l.slice(0, MAX_COLS - 1) + "…" : l));
+    const compact = lines.filter((l, i) => !(l.trim() === "" && (lines[i - 1] || "").trim() === ""));
+    const cut = compact.length > MAX_LINES;
+    const shown = compact.slice(0, MAX_LINES).map(l => (/^== /.test(l) ? `<b>${html(l)}</b>` : html(l))).join("\n");
+    const title = d.t.log || "Technical log";
+    const note = d.t.logNote || "Excerpt of the raw output of the automated checks. The full log is saved next to the PDF.";
+    logHtml = `\n<h2 class="newpage">${title}</h2>\n<p class="lognote">${note}</p>\n<pre class="log">${shown}${cut ? "\n…" : ""}</pre>\n`;
+  }
+}
+
 const index = Math.max(0, Math.min(100, Math.round(d.index)));
 const band = index <= 10 ? "#2f9e44" : index <= 29 ? "#c99a00" : index <= 79 ? "#d9480f" : "#e03131";
 const a = Math.PI * (1 - index / 100);
@@ -36,7 +60,7 @@ const nx = (120 + 78 * Math.cos(a)).toFixed(1), ny = (118 - 78 * Math.sin(a)).to
 const head = t.slice(0, t.indexOf("<body>"))
   .replace(/<html lang="[^"]*">/, `<html lang="${esc(d.lang)}">`)
   .replace(/<title>[^<]*<\/title>/, `<title>ScamCheck: ${d.domain}</title>`)
-  .replace(/@bottom-left \{ content: "[^;]*";/, `@bottom-left { content: "${cssStr(d.t.disclaimer)}${BS}A ScamCheck · ${cssStr(d.t.generated)} ${gen} · github.com/matteobaccan/ScamCheck";`)
+  .replace(/@bottom-left \{ content: "[^;]*";/, `@bottom-left { content: "${cssStr(d.t.disclaimer)}${BS}A ScamCheck by Matteo Baccan · ${cssStr(d.t.generated)} ${gen} · github.com/matteobaccan/ScamCheck";`)
   .replace(/content: "Page " counter\(page\) " of " counter\(pages\)/, `content: "${cssStr(d.t.page)} " counter(page) " ${cssStr(d.t.of)} " counter(pages)`)
   .replace(/\.gval \{([^}]*)color: #[0-9a-f]{6}/, `.gval {$1color: ${band}`)
   .replace(/\.glbl \{([^}]*)color: #[0-9a-f]{6}/, `.glbl {$1color: ${band}`)
@@ -101,8 +125,8 @@ ${ul(d.limits)}
 <div class="note">${d.t.closing}</div>
 
 <footer>${d.t.sources}: ${d.sources}</footer>
-</body>
+${logHtml}</body>
 </html>
 `;
 fs.writeFileSync(out, head + body);
-console.log(`written ${out} (index ${index}, needle ${nx},${ny})`);
+console.log(`written ${out} (index ${index}, needle ${nx},${ny}${logHtml ? ", with log appendix" : ""})`);

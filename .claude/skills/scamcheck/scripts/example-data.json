@@ -33,7 +33,9 @@
     "closing": "This report is an indication based on public signals, not a certainty or legal advice.",
     "sources": "Sources",
     "shotAlt": "Screenshot of the example-shop.example home page",
-    "shotCaption": "Home page captured on YYYY-MM-DD · 1280×900"
+    "shotCaption": "Home page captured on YYYY-MM-DD · 1280×900",
+    "log": "Technical log",
+    "logNote": "Excerpt of the raw output of the automated checks. The full log is saved next to the PDF."
   },
   "verdict": "HIGH RISK · not recommended",
   "summary": "electronics shop opened three weeks ago, with no legal name or VAT number, 70% discounts on well-known brands and card payment unavailable at checkout. <strong>No blacklist</strong> flags it yet, but the signals are typical of fake shops.",

@@ -90,7 +90,7 @@ if have nslookup; then nslookup "$R.dbl.spamhaus.org" 2>&1 | grep -E "127\.0\.1\
 sec "SURBL"
 curl -s -m 20 "https://dns.google/resolve?name=$R.multi.surbl.org&type=A" | j 'console.log(d.Status===3?"not listed":(d.Answer||[]).map(a=>a.data).join(" "))'
 
-sec "DOWNLOADABLE LISTS (cached in $L)"
+sec "DOWNLOADABLE LISTS (cached 12 h)"
 get(){ [ -s "$L/$1" ] && [ -z "$(find "$L/$1" -mmin +720 2>/dev/null)" ] || curl -sL -m 180 -o "$L/$1" "$2"; }
 get hagezi.txt https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/fake-onlydomains.txt &
 get jarel.txt https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/lists/wildcard_domains/scams.txt &
@@ -129,7 +129,7 @@ if ! curl -sL -m 30 -A "$UA" "https://$D/" -o "$O/home.html"; then
 fi
 [ -s "$O/home.html" ] || curl -sL -m 30 -A "$UA" "http://$D/" -o "$O/home.html"
 if [ -s "$O/home.html" ]; then
-  echo "saved $O/home.html ($(wc -c < "$O/home.html") bytes)"
+  echo "home page saved ($(wc -c < "$O/home.html") bytes)"
   grep -oiE '<title>[^<]*' "$O/home.html" | head -1
   echo "noindex: $(grep -ciE 'noindex' "$O/home.html")"
   echo "-- markers:"; grep -Eio "api\.telegram\.org/bot|contextmenu|debugger;|devtools|connect wallet|walletconnect|seed phrase|type=\"password\"|p\.? ?iva|partita iva|vat number" "$O/home.html" | sort | uniq -c | head -12
@@ -144,4 +144,4 @@ echo "googlebot=$a bytes, facebook-mobile=$b bytes"; grep -oiE '<title>[^<]*' "$
 sec "PSEUDO-TLD"
 echo "$D" | grep -E '\.(de|uk|us|eu|gb|it|br|cn|jpn|ru|sa|za)\.(com|net|org)$' || echo "no"
 
-echo; echo "== DONE. Page copies in $O. Continue with the manual checks in SKILL.md (identity, content, payments, registers)."
+echo; echo "== DONE. Page copies in the work folder (out-$D). Continue with the manual checks in SKILL.md (identity, content, payments, registers)."

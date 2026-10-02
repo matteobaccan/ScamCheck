@@ -4,18 +4,19 @@
 #
 # ScamCheck helper (optional): screenshot + HTML report + PDF in one go.
 #
-# Usage: bash make-pdf.sh <url> <data.json> <report_dir> [work_dir]
+# Usage: bash make-pdf.sh <url> <data.json> <report_dir> [work_dir] [log_file]
 #   <url>        page to screenshot (e.g. https://www.example.com/)
 #   <data.json>  analysis data for gen-report.js (lang and domain are read from it)
 #   <report_dir> where the PDF goes (e.g. report); existing files are never overwritten
 #   [work_dir]   scratch folder (default: ./scamcheck-work)
+#   [log_file]   raw output of collect.sh: added as an appendix to the PDF and saved next to it as .log.txt
 #
 # Requires: bash, node, Chrome/Chromium/Edge. Optional: pdftotext, pdftoppm (final check).
 # Exit codes: 2 = no browser found, 3 = HTML generation failed, 4 = PDF not produced.
 # On failure follow the manual steps in SKILL.md ("PDF report").
 
-URL="${1:?usage: make-pdf.sh <url> <data.json> <report_dir> [work_dir]}"; DATA="${2:?}"; RDIR="${3:?}"
-W="${4:-./scamcheck-work}"; HERE="$(cd "$(dirname "$0")" && pwd)"
+URL="${1:?usage: make-pdf.sh <url> <data.json> <report_dir> [work_dir] [log_file]}"; DATA="${2:?}"; RDIR="${3:?}"
+W="${4:-./scamcheck-work}"; LOG="${5:-}"; HERE="$(cd "$(dirname "$0")" && pwd)"
 DOMAIN=$(node -e 'console.log(JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")).domain)' "$DATA") || exit 3
 LANG_CODE=$(node -e 'console.log(JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")).lang||"en")' "$DATA")
 OUTD="$W/report-$DOMAIN"; mkdir -p "$OUTD" "$RDIR"
@@ -39,7 +40,8 @@ run --hide-scrollbars --window-size=1280,900 --virtual-time-budget=8000 --screen
 
 # 2. HTML
 STAMP=$(date +%Y-%m-%d_%H%M); GEN=$(date "+%Y-%m-%d %H:%M")
-node "$HERE/gen-report.js" "$DATA" "$OUTD/report.html" "$GEN" || exit 3
+LOGOPT=(); [ -n "$LOG" ] && { [ -s "$LOG" ] && LOGOPT=("--log=$LOG") || echo "log file missing or empty: PDF without appendix"; }
+node "$HERE/gen-report.js" "$DATA" "$OUTD/report.html" "$GEN" "${LOGOPT[@]}" || exit 3
 
 # 3. PDF with a unique name (history: never overwrite)
 OUT="$RDIR/$DOMAIN-$STAMP-$LANG_CODE.pdf"; n=2
@@ -50,6 +52,13 @@ command -v cygpath >/dev/null 2>&1 && ABS_HTML="$(cygpath -m "$ABS_HTML")"
 run --no-pdf-header-footer --print-to-pdf="$OUT" "file:///${ABS_HTML#/}"
 [ -s "$OUT" ] || { echo "PDF not produced"; exit 4; }
 echo "pdf: $OUT"
+
+# Full log next to the PDF (same name, .log.txt), with a short header
+if [ ${#LOGOPT[@]} -gt 0 ]; then
+  LOGOUT="${OUT%.pdf}.log.txt"
+  { echo "ScamCheck by Matteo Baccan - https://github.com/matteobaccan/ScamCheck"; echo "Domain: $DOMAIN | URL: $URL | Generated: $GEN"; echo "Raw output of the automated checks (untrusted third-party data)."; echo "------------------------------------------------------------------"; cat "$LOG"; } > "$LOGOUT"
+  echo "log: $LOGOUT"
+fi
 
 # 4. Check
 if command -v pdftotext >/dev/null 2>&1; then

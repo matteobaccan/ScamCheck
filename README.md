@@ -86,7 +86,10 @@ The PDF is saved as `report/<domain>-<YYYY-MM-DD_HHMM>-<lang>.pdf` and contains:
 - page 1: verdict with a 0–100 risk gauge, summary, home page screenshot, main red flags;
 - page 2: the full checklist;
 - page 3: positive signals, what to do, limitations, sources;
-- on every page: a footer with the automated-analysis disclaimer, generation date and time, link to this repository and page number.
+- page 4 onwards: technical log, an excerpt of the raw output of the automated checks;
+- on every page: a footer with the automated-analysis disclaimer, "ScamCheck by Matteo Baccan", generation date and time, link to this repository and page number.
+
+Next to each PDF the full log of the checks is saved as `.log.txt` with the same name, so every statement in the report can be verified later.
 
 The `report/` folder is excluded from git and keeps the history: old reports are never deleted or overwritten.
 
@@ -96,7 +99,7 @@ The skill ships optional scripts in [`.claude/skills/scamcheck/scripts/`](.claud
 
 - `collect.sh <domain>`: runs all the free, key-less checks and downloads the blocklists (cached for 12 hours);
 - `gen-report.js <data.json> <out.html>`: fills the report template (see `example-data.json`);
-- `make-pdf.sh <url> <data.json> report`: screenshot, HTML and PDF in one go, with a final check.
+- `make-pdf.sh <url> <data.json> report [work_dir] [log]`: screenshot, HTML and PDF (with the technical log appendix and the `.log.txt` file) in one go, with a final check.
 
 They are optional: if a script fails or a service changes format, the skill falls back to the individual commands documented in `SKILL.md`. You can also run them yourself.
 
