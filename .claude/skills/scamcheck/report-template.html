@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ScamCheck: negozio-esempio.example</title>
+<title>ScamCheck: example-shop.example</title>
 <style>
   @page { size: A4; margin: 16mm 15mm 20mm;
-    @bottom-left { content: "Analisi generata con strumenti automatici: richiede una revisione umana per confermare la valutazione.\A ScamCheck · generato il GG/MM/AAAA HH:MM · github.com/matteobaccan/ScamCheck"; white-space: pre; font-family: "Segoe UI", sans-serif; font-size: 7.5pt; line-height: 1.5; color: #6b7385; }
-    @bottom-right { content: "Pagina " counter(page) " di " counter(pages); font-family: "Segoe UI", sans-serif; font-size: 8pt; color: #6b7385; }
+    @bottom-left { content: "Analysis generated with automated tools: human review is required to confirm the assessment.\A ScamCheck · generated on YYYY-MM-DD HH:MM · github.com/matteobaccan/ScamCheck"; white-space: pre; font-family: "Segoe UI", sans-serif; font-size: 7.5pt; line-height: 1.5; color: #6b7385; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: "Segoe UI", sans-serif; font-size: 8pt; color: #6b7385; }
   }
   * { box-sizing: border-box; }
   body { font-family: "Segoe UI", system-ui, sans-serif; color: #1d2433; font-size: 10.5pt; line-height: 1.45; margin: 0; }
@@ -53,25 +53,25 @@
 </head>
 <body>
 <!--
-  MODELLO DI ESEMPIO con dati FITTIZI (dominio riservato .example, RFC 2606).
-  Sostituire tutti i contenuti con quelli dell’analisi reale; mantenere struttura, classi e impaginazione.
-  home.png = screenshot della home da affiancare a questo file.
+  EXAMPLE TEMPLATE with FICTITIOUS data (reserved .example domain, RFC 2606).
+  Replace all content with the real analysis, translated into the report language; keep structure, classes and layout.
+  home.png = home page screenshot placed next to this file.
 -->
 <header>
   <div class="head-text">
     <div class="kicker">ScamCheck · report</div>
-    <h1>negozio-esempio.example</h1>
-    <div class="meta">URL analizzato: https://negozio-esempio.example/<br>Data analisi: GG mese AAAA, ore HH:MM<br>Metodo: checklist ScamCheck (7 sezioni)</div>
+    <h1>example-shop.example</h1>
+    <div class="meta">Analysed URL: https://example-shop.example/<br>Analysis date: YYYY-MM-DD, HH:MM<br>Method: ScamCheck checklist (7 sections)</div>
   </div>
   <figure class="thumb">
-    <img src="home.png" alt="Screenshot della home di negozio-esempio.example">
-    <figcaption>Home catturata il GG/MM/AAAA · 1280×900</figcaption>
+    <img src="home.png" alt="Screenshot of the example-shop.example home page">
+    <figcaption>Home page captured on YYYY-MM-DD · 1280×900</figcaption>
   </figure>
 </header>
 
 <div class="verdict">
   <div class="gauge">
-    <svg viewBox="0 0 240 140" role="img" aria-label="Indice di rischio truffa 66 su 100">
+    <svg viewBox="0 0 240 140" role="img" aria-label="Scam risk index 66 out of 100">
       <g fill="none" stroke-width="18">
         <path d="M28.0 116.3 A92 92 0 0 1 32.0 91.2" stroke="#2f9e44"/>
         <path d="M33.1 87.9 A92 92 0 0 1 64.5 44.6" stroke="#f2c200"/>
@@ -85,71 +85,71 @@
       <circle cx="120" cy="118" r="8" fill="#1d2433"/>
     </svg>
     <div class="gval">66<span>/100</span></div>
-    <div class="glbl">ALTO RISCHIO · poco affidabile</div>
-    <div class="glegend"><i style="background:#2f9e44"></i>basso <i style="background:#f2c200"></i>sospetto <i style="background:#f76707"></i>alto <i style="background:#e03131"></i>truffa</div>
+    <div class="glbl">HIGH RISK · not recommended</div>
+    <div class="glegend"><i style="background:#2f9e44"></i>low <i style="background:#f2c200"></i>suspicious <i style="background:#f76707"></i>high <i style="background:#e03131"></i>scam</div>
   </div>
   <div class="summary">
-    <strong>In una frase:</strong> e-commerce di elettronica aperto da tre settimane, senza ragione sociale né P.IVA, con sconti del 70% su marchi noti e pagamento con carta che al checkout risulta non disponibile. <strong>Nessuna blacklist</strong> lo segnala ancora, ma i segnali sono tipici dei fake shop.
-    <div class="pts">Indice = punti di rischio netti × 3 (22 × 3 = 66), massimo 79 senza red flag critici. Nessun red flag critico rilevato.</div>
+    <strong>In one sentence:</strong> electronics shop opened three weeks ago, with no legal name or VAT number, 70% discounts on well-known brands and card payment that turns out to be unavailable at checkout. <strong>No blacklist</strong> flags it yet, but the signals are typical of fake shops.
+    <div class="pts">Index = net risk points × 3 (22 × 3 = 66), capped at 79 without critical red flags. No critical red flags found.</div>
   </div>
 </div>
 
-<h2>Red flag principali</h2>
+<h2>Main red flags</h2>
 <ul>
-  <li><strong>Dominio di 3 settimane.</strong> RDAP: registrazione <code>AAAA-MM-GG</code>, scadenza dopo un solo anno. Nessuna copia su Wayback Machine.</li>
-  <li><strong>Nessuna identità legale.</strong> Footer con solo "© Negozio Esempio": mancano ragione sociale, P.IVA e indirizzo. La privacy policy non indica il titolare del trattamento.</li>
-  <li><strong>Prezzi non plausibili.</strong> Smartphone di marca a 299 € contro un prezzo di mercato di circa 1.000 €, banner "liquidazione totale".</li>
-  <li><strong>Metodi di pagamento incoerenti.</strong> In home compaiono i loghi di carte e PayPal, ma le condizioni indicano solo bonifico per "problemi temporanei" con le carte.</li>
+  <li><strong>Three-week-old domain.</strong> RDAP: registered on <code>YYYY-MM-DD</code>, expires after one year. No captures on the Wayback Machine.</li>
+  <li><strong>No legal identity.</strong> Footer shows only "© Example Shop": no legal name, VAT number or address. The privacy policy does not name a data controller.</li>
+  <li><strong>Implausible prices.</strong> Branded smartphone at €299 against a market price of about €1,000, "total clearance" banner.</li>
+  <li><strong>Inconsistent payment methods.</strong> Card and PayPal logos on the home page, but the terms only allow bank transfer due to "temporary problems" with cards.</li>
 </ul>
 
-<h2 class="newpage">Dettaglio della checklist</h2>
+<h2 class="newpage">Checklist details</h2>
 <table>
-  <thead><tr><th style="width:30%">Controllo</th><th style="width:9%">Esito</th><th>Nota</th></tr></thead>
+  <thead><tr><th style="width:30%">Check</th><th style="width:9%">Result</th><th>Note</th></tr></thead>
   <tbody>
-    <tr><td>1.1 Età del dominio</td><td class="s bad">❌</td><td>3 settimane</td></tr>
-    <tr><td>1.2 Scadenza</td><td class="s warn">⚠️</td><td>Registrato per un solo anno</td></tr>
-    <tr><td>1.3 Imitazione di marchi</td><td class="s ok">✅</td><td>Non imita brand noti nel dominio</td></tr>
-    <tr><td>1.4 Estensione (TLD)</td><td class="s ok">✅</td><td>Nessuna estensione abusata</td></tr>
-    <tr><td>1.5 WHOIS / registrar</td><td class="s warn">⚠️</td><td>Registrant oscurato e azienda non identificabile</td></tr>
-    <tr><td>1.6 Redirect</td><td class="s ok">✅</td><td>Nessun redirect</td></tr>
-    <tr><td>2.1 HTTPS</td><td class="s ok">✅</td><td>Certificato valido</td></tr>
-    <tr><td>2.3 Storico del sito</td><td class="s warn">⚠️</td><td>Nessuna copia su Wayback Machine</td></tr>
-    <tr><td>2.4 Popolarità</td><td class="s na">➖</td><td>Fuori dalla classifica Tranco (nessun malus)</td></tr>
-    <tr><td>3.1 Blacklist</td><td class="s ok">✅</td><td>Nessun rilevamento su Sucuri e URLVoid</td></tr>
-    <tr><td>3.2 Punteggi di terzi</td><td class="s warn">⚠️</td><td>Esempio: Trust Score 38/100</td></tr>
-    <tr><td>3.3–3.4 Reputazione e recensioni</td><td class="s warn">⚠️</td><td>Nessuna recensione esterna</td></tr>
-    <tr><td>4.1 Ragione sociale e sede</td><td class="s bad">❌</td><td>Assenti</td></tr>
-    <tr><td>4.2 Partita IVA</td><td class="s bad">❌</td><td>Assente</td></tr>
-    <tr><td>4.4 Contatti</td><td class="s warn">⚠️</td><td>Solo email gratuita e chat WhatsApp</td></tr>
-    <tr><td>5.2 Prezzi</td><td class="s bad">❌</td><td>Sconti del 70% su elettronica di marca</td></tr>
-    <tr><td>5.3 Urgenza e pressione</td><td class="s warn">⚠️</td><td>Countdown e "solo 2 pezzi rimasti"</td></tr>
-    <tr><td>5.5 Policy legali</td><td class="s warn">⚠️</td><td>Testi copiati da un altro negozio</td></tr>
-    <tr><td>6.1 Metodi di pagamento</td><td class="s warn">⚠️</td><td>Solo bonifico</td></tr>
-    <tr><td>6.2 Coerenza dei pagamenti</td><td class="s warn">⚠️</td><td>Loghi di carte e PayPal non disponibili al checkout</td></tr>
-    <tr><td>7.1–7.3 Segnali tecnici</td><td class="s ok">✅</td><td>Nessuno script sospetto</td></tr>
+    <tr><td>1.1 Domain age</td><td class="s bad">❌</td><td>3 weeks</td></tr>
+    <tr><td>1.2 Expiry</td><td class="s warn">⚠️</td><td>Registered for one year only</td></tr>
+    <tr><td>1.3 Brand impersonation</td><td class="s ok">✅</td><td>Domain does not imitate known brands</td></tr>
+    <tr><td>1.4 Extension (TLD)</td><td class="s ok">✅</td><td>No abused extension</td></tr>
+    <tr><td>1.5 WHOIS / registrar</td><td class="s warn">⚠️</td><td>Registrant hidden and company not identifiable</td></tr>
+    <tr><td>1.6 Redirects</td><td class="s ok">✅</td><td>No redirects</td></tr>
+    <tr><td>2.1 HTTPS</td><td class="s ok">✅</td><td>Valid certificate</td></tr>
+    <tr><td>2.3 Site history</td><td class="s warn">⚠️</td><td>No Wayback Machine captures</td></tr>
+    <tr><td>2.4 Popularity</td><td class="s na">➖</td><td>Not in the Tranco list (no penalty)</td></tr>
+    <tr><td>3.1 Blacklists</td><td class="s ok">✅</td><td>No detections on Sucuri, URLVoid, Spamhaus DBL, HaGeZi</td></tr>
+    <tr><td>3.2 Third-party scores</td><td class="s warn">⚠️</td><td>Example: Trust Score 38/100</td></tr>
+    <tr><td>3.3–3.4 Reputation and reviews</td><td class="s warn">⚠️</td><td>No external reviews</td></tr>
+    <tr><td>4.1 Legal name and address</td><td class="s bad">❌</td><td>Missing</td></tr>
+    <tr><td>4.2 VAT number</td><td class="s bad">❌</td><td>Missing</td></tr>
+    <tr><td>4.4 Contacts</td><td class="s warn">⚠️</td><td>Free email address and WhatsApp chat only, no returns address</td></tr>
+    <tr><td>5.2 Prices</td><td class="s bad">❌</td><td>70% discounts on branded electronics</td></tr>
+    <tr><td>5.3 Urgency and pressure</td><td class="s warn">⚠️</td><td>Countdown and "only 2 left"</td></tr>
+    <tr><td>5.5 Legal policies</td><td class="s warn">⚠️</td><td>Texts copied from another shop</td></tr>
+    <tr><td>6.1 Payment methods</td><td class="s warn">⚠️</td><td>Bank transfer only</td></tr>
+    <tr><td>6.2 Payment consistency</td><td class="s warn">⚠️</td><td>Card and PayPal logos not available at checkout</td></tr>
+    <tr><td>7.1–7.5 Technical signals</td><td class="s ok">✅</td><td>No suspicious scripts, no cloaking</td></tr>
   </tbody>
 </table>
-<div class="legend">✅ ok · ⚠️ sospetto (1 punto) · ❌ red flag (3 punti) · ➕ positivo (−2) · ➖ non verificabile</div>
+<div class="legend">✅ ok · ⚠️ suspicious (1 point) · ❌ red flag (3 points) · ➕ positive (−2) · ➖ not verifiable</div>
 
-<h2 class="newpage">Segnali positivi</h2>
+<h2 class="newpage">Positive signals</h2>
 <ul>
-  <li>HTTPS valido, nessuna blacklist, nessuno script sospetto.</li>
+  <li>Valid HTTPS, no blacklist, no suspicious scripts.</li>
 </ul>
 
-<h2>Cosa fare</h2>
+<h2>What to do</h2>
 <ul>
-  <li><strong>Non pagare con bonifico</strong>: non c’è modo di recuperare i soldi.</li>
-  <li>Cercare lo stesso prodotto su negozi noti: un prezzo troppo basso è il segnale più forte.</li>
-  <li>Se si è già pagato: contattare subito la banca, conservare ricevute e screenshot, fare denuncia su commissariatodips.it.</li>
+  <li><strong>Do not pay by bank transfer</strong>: there is no way to get the money back.</li>
+  <li>Look for the same product on well-known shops: a price that is too low is the strongest signal.</li>
+  <li>If you have already paid: contact your bank immediately, keep receipts and screenshots, report it to the police or national fraud centre.</li>
 </ul>
 
-<h2>Limiti dell’analisi</h2>
+<h2>Limitations</h2>
 <ul>
-  <li>Elencare i controlli ➖ non eseguiti e perché (es. chiavi API mancanti, servizi non raggiungibili).</li>
-  <li>Nessun form compilato, nessun login, nessun file scaricato.</li>
+  <li>List the ➖ checks not performed and why (e.g. missing API keys, unreachable services).</li>
+  <li>No forms filled in, no login, no files downloaded.</li>
 </ul>
-<div class="note">Questo report è un’indicazione basata su segnali pubblici raccolti il GG/MM/AAAA, non una certezza né un parere legale.</div>
+<div class="note">This report is an indication based on public signals collected on YYYY-MM-DD, not a certainty or legal advice.</div>
 
-<footer>Fonti: RDAP, certificato TLS del sito, Wayback Machine CDX, Sucuri SiteCheck, URLVoid, pagine pubbliche del sito, ricerche web.</footer>
+<footer>Sources: RDAP, site TLS certificate, Wayback Machine CDX, Sucuri SiteCheck, URLVoid, Spamhaus DBL, HaGeZi Fake, public pages of the site, web searches.</footer>
 </body>
 </html>
