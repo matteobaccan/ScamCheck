@@ -1,0 +1,108 @@
+{
+  "lang": "en",
+  "domain": "example-shop.example",
+  "url": "https://example-shop.example/",
+  "analysisDate": "YYYY-MM-DD, HH:MM",
+  "index": 66,
+  "t": {
+    "disclaimer": "Analysis generated with automated tools: human review is required to confirm the assessment.",
+    "generated": "generated on",
+    "page": "Page",
+    "of": "of",
+    "indexLabel": "Scam risk index",
+    "url": "Analysed URL",
+    "date": "Analysis date",
+    "method": "Method: ScamCheck checklist (7 sections)",
+    "bands": [
+      "low",
+      "suspicious",
+      "high",
+      "scam"
+    ],
+    "oneLine": "In one sentence",
+    "redflags": "Main red flags",
+    "details": "Checklist details",
+    "check": "Check",
+    "result": "Result",
+    "note": "Note",
+    "legend": "✅ ok · ⚠️ suspicious (1 point) · ❌ red flag (3 points) · ➕ positive (−2) · ➖ not verifiable / not applicable",
+    "positives": "Positive signals",
+    "third": "Third-party scores and lists",
+    "todo": "What to do",
+    "limits": "Limitations",
+    "closing": "This report is an indication based on public signals, not a certainty or legal advice.",
+    "sources": "Sources",
+    "shotAlt": "Screenshot of the example-shop.example home page",
+    "shotCaption": "Home page captured on YYYY-MM-DD · 1280×900"
+  },
+  "verdict": "HIGH RISK · not recommended",
+  "summary": "electronics shop opened three weeks ago, with no legal name or VAT number, 70% discounts on well-known brands and card payment unavailable at checkout. <strong>No blacklist</strong> flags it yet, but the signals are typical of fake shops.",
+  "calc": "22 risk points, no positive signals. Index = 22 × 3 = 66 (capped at 79 without critical red flags).",
+  "redflags": [
+    "<strong>Three-week-old domain.</strong> RDAP: registered on <code>YYYY-MM-DD</code>, one-year registration, no Wayback captures.",
+    "<strong>No legal identity.</strong> No legal name, VAT number or address; no data controller in the privacy policy.",
+    "<strong>Implausible prices.</strong> Branded smartphone at €299 against a market price of about €1,000."
+  ],
+  "checks": [
+    [
+      "1.1 Domain age",
+      "bad",
+      "3 weeks"
+    ],
+    [
+      "1.2 Expiry",
+      "warn",
+      "One-year registration"
+    ],
+    [
+      "2.1 HTTPS",
+      "ok",
+      "Valid certificate"
+    ],
+    [
+      "3.1 Blacklists",
+      "ok",
+      "Clean on all lists"
+    ],
+    [
+      "4.1 Legal name and address",
+      "bad",
+      "Missing"
+    ],
+    [
+      "4.2 VAT number",
+      "bad",
+      "Missing"
+    ],
+    [
+      "5.2 Prices",
+      "bad",
+      "70% discounts on branded electronics"
+    ],
+    [
+      "6.1 Payment methods",
+      "warn",
+      "Bank transfer only"
+    ],
+    [
+      "6.2 Payment consistency",
+      "warn",
+      "Card logos not available at checkout"
+    ]
+  ],
+  "positives": [
+    "Valid HTTPS, no blacklist, no suspicious scripts."
+  ],
+  "third": [
+    "Sucuri: rating B, no malware.",
+    "ScamAdviser: 38/100."
+  ],
+  "todo": [
+    "<strong>Do not pay by bank transfer.</strong>",
+    "If you already paid: contact your bank and report it to the police."
+  ],
+  "limits": [
+    "VirusTotal, Google Safe Browsing and Kaspersky not queried (no API key)."
+  ],
+  "sources": "RDAP, TLS certificate, Wayback Machine, Sucuri SiteCheck, ScamAdviser, public pages of the site."
+}

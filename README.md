@@ -81,6 +81,16 @@ The PDF is saved as `report/<domain>-<YYYY-MM-DD_HHMM>-<lang>.pdf` and contains:
 
 The `report/` folder is excluded from git and keeps the history: old reports are never deleted or overwritten.
 
+### Helper scripts
+
+The skill ships optional scripts in [`.claude/skills/scamcheck/scripts/`](.claude/skills/scamcheck/scripts/) that Claude uses when `bash` and `node` are available:
+
+- `collect.sh <domain>`: runs all the free, key-less checks and downloads the blocklists (cached for 12 hours);
+- `gen-report.js <data.json> <out.html>`: fills the report template (see `example-data.json`);
+- `make-pdf.sh <url> <data.json> report`: screenshot, HTML and PDF in one go, with a final check.
+
+They are optional: if a script fails or a service changes format, the skill falls back to the individual commands documented in `SKILL.md`. You can also run them yourself.
+
 ## Reading the verdict
 
 | Verdict | Index | Meaning |
