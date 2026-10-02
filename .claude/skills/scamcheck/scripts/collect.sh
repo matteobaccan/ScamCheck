@@ -86,7 +86,10 @@ curl -s -m 20 "https://api.gopluslabs.io/api/v1/phishing_site?url=https://$D" | 
 sec "CLOUDFLARE SECURITY DNS"
 curl -s -m 20 -H 'accept: application/dns-json' "https://security.cloudflare-dns.com/dns-query?name=$D&type=A" | j 'console.log((d.Answer||[]).map(a=>a.data).join(" ")||"no answer",JSON.stringify(d.Comment||d.extended_dns_errors||""))'
 sec "SPAMHAUS DBL (system resolver)"
-if have nslookup; then nslookup "$R.dbl.spamhaus.org" 2>&1 | grep -E "127\.0\.1\.[0-9]+" | head -1 || echo "not listed (or resolver blocked)"; else echo "n/d (no nslookup)"; fi
+if have nslookup; then
+  x=$(nslookup "$R.dbl.spamhaus.org" 2>&1 | grep -oE "127\.0\.1\.[0-9]+" | head -1)
+  echo "${x:-not listed (NXDOMAIN; a blocked public resolver also gives no answer)}"
+else echo "n/d (no nslookup)"; fi
 sec "SURBL"
 curl -s -m 20 "https://dns.google/resolve?name=$R.multi.surbl.org&type=A" | j 'console.log(d.Status===3?"not listed":(d.Answer||[]).map(a=>a.data).join(" "))'
 
@@ -111,9 +114,9 @@ echo "(count > 0 = domain string found: open the file and confirm it is an exact
 
 sec "EMAIL / DNS"
 if have nslookup; then
-  nslookup -type=mx "$R" 2>/dev/null | grep -i "mail exchanger" | head -3 || echo "no MX"
-  nslookup -type=txt "$R" 2>/dev/null | grep -io 'v=spf1[^"]*' | head -1 || echo "no SPF"
-  nslookup -type=txt "_dmarc.$R" 2>/dev/null | grep -io 'v=DMARC1[^"]*' | head -1 || echo "no DMARC"
+  x=$(nslookup -type=mx "$R" 2>/dev/null | grep -i "mail exchanger" | head -3); echo "${x:-no MX}"
+  x=$(nslookup -type=txt "$R" 2>/dev/null | grep -io 'v=spf1[^"]*' | head -1); echo "${x:-no SPF}"
+  x=$(nslookup -type=txt "_dmarc.$R" 2>/dev/null | grep -io 'v=DMARC1[^"]*' | head -1); echo "${x:-no DMARC}"
   nslookup "$D" 2>/dev/null | sed -n '/Name:/,$p' | grep -E "Address" | head -3
 else
   curl -s -m 20 "https://dns.google/resolve?name=$R&type=MX" | j 'console.log("MX",(d.Answer||[]).map(a=>a.data).join(", ")||"none")'

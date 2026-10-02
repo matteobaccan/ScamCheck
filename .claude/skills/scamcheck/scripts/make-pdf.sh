@@ -20,6 +20,8 @@ W="${4:-./scamcheck-work}"; LOG="${5:-}"; HERE="$(cd "$(dirname "$0")" && pwd)"
 DOMAIN=$(node -e 'console.log(JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")).domain)' "$DATA") || exit 3
 LANG_CODE=$(node -e 'console.log(JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")).lang||"en")' "$DATA")
 OUTD="$W/report-$DOMAIN"; mkdir -p "$OUTD" "$RDIR"
+# The browser needs absolute paths (on Windows also C:/ style)
+RDIR="$(cd "$RDIR" && pwd)"; command -v cygpath >/dev/null 2>&1 && RDIR="$(cygpath -m "$RDIR")"
 
 # Find a Chromium-based browser. Never call it without --headless (on Windows it would open a window).
 BROWSER=""
