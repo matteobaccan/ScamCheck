@@ -73,7 +73,11 @@ The skill and its checklist are in English, but the report can be written in any
 check https://example.com and give me a PDF report in French
 ```
 
-Without `lang:`, the report uses the language you write in; if that is unclear, English.
+Without `lang:`, the chat report uses the language you write in. Before generating a PDF, Claude asks you which language to use and whether to include the technical log; add `lang:<code>` and `log:yes` or `log:no` to skip the question:
+
+```
+/scamcheck https://example.com pdf lang:it log:no
+```
 
 ### PDF report
 
@@ -86,10 +90,10 @@ The PDF is saved as `report/<domain>-<YYYY-MM-DD_HHMM>-<lang>.pdf` and contains:
 - page 1: verdict with a 0–100 risk gauge, summary, home page screenshot, main red flags;
 - page 2: the full checklist;
 - page 3: positive signals, what to do, limitations, sources;
-- page 4 onwards: technical log, an excerpt of the raw output of the automated checks;
+- page 4 onwards (optional, you choose): technical log, an excerpt of the raw output of the automated checks;
 - on every page: a footer with the automated-analysis disclaimer, "ScamCheck by Matteo Baccan", generation date and time, link to this repository and page number.
 
-Next to each PDF the full log of the checks is saved as `.log.txt` with the same name, so every statement in the report can be verified later.
+Next to each PDF the full log of the checks is always saved as `.log.txt` with the same name, even when it is not included in the PDF, so every statement in the report can be verified later.
 
 The `report/` folder is excluded from git and keeps the history: old reports are never deleted or overwritten.
 

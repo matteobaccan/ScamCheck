@@ -1,7 +1,7 @@
 ---
 name: scamcheck
 description: Checks whether a website is a likely scam (fake shops, phishing, fake investment or crypto platforms, fake services) and produces a reasoned verdict, optionally as a PDF report in any language. Use when the user gives a URL or domain and asks if it is trustworthy, safe, legit, a scam/fraud, or whether they can buy, pay or enter data there.
-argument-hint: <url-or-domain> [lang:<code>] [pdf]
+argument-hint: <url-or-domain> [lang:<code>] [pdf] [log:yes|no]
 ---
 
 # ScamCheck
@@ -11,7 +11,8 @@ Analyse the site given in `$ARGUMENTS` and produce a reasoned verdict on the ris
 ## Report language
 
 - Instructions, checklist and template are in English; the **report** (chat answer and PDF) can be in any language.
-- Language choice, in order: explicit `lang:<code>` in the arguments (e.g. `lang:it`, `lang:de`, `lang:fr`, `lang:es`); a language named in the request ("report in Italian", "in italiano"); the language the user is writing in; otherwise English.
+- For a **PDF**, ask the user the language (and whether to include the technical log) before generating it: see "Ask before generating" in the PDF section.
+- Language choice for the chat answer, in order: explicit `lang:<code>` in the arguments (e.g. `lang:it`, `lang:de`, `lang:fr`, `lang:es`); a language named in the request ("report in Italian", "in italiano"); the language the user is writing in; otherwise English.
 - Translate **everything** the reader sees: headings, verdict labels, checklist notes, legend, gauge labels, page footer ("Page N of M"), dates (local format) and number formats. Keep domain names, commands, quoted page text and proper names as they are.
 - Keep "ScamCheck by Matteo Baccan" untranslated in the footer.
 - Fixed wording, to translate faithfully: footer disclaimer "Analysis generated with automated tools: human review is required to confirm the assessment." and the closing note "This report is an indication based on public signals, not a certainty or legal advice."
@@ -42,7 +43,7 @@ The [`scripts/`](scripts/) folder speeds up the work, but the skill must work wi
 |---|---|---|
 | `bash scripts/collect.sh <domain> <scratchpad>/work` | Runs every no-key check (headers, RDAP + WHOIS fallback for ccTLDs, TLS for bare and `www` host, crt.sh, Wayback, Tranco, urlscan.io, Sucuri, ScamAdviser, WOT, URLVoid, Gridinsoft, GoPlus, Cloudflare DNS, Spamhaus DBL, SURBL, the 11 downloadable lists cached for 12 h, MX/SPF/DMARC, robots, home page copy and markers, cloaking, pseudo-TLD) and prints a text summary. Each section is independent: a failing service prints `n/d` | Re-run only the failed sections by hand from the "External services" tables; if the script does not start at all (no bash/node), run all the commands manually |
 | `node scripts/gen-report.js <data.json> <out.html> ["date time"]` | Fills `report-template.html` with the analysis (all strings already translated): gauge needle and colour, footer, page numbers, checklist rows. See `scripts/example-data.json` for the format (status codes: `ok`, `warn`, `bad`, `plus`, `na`, `crit`) | Copy `report-template.html` and edit it by hand as described in "PDF report" |
-| `bash scripts/make-pdf.sh <url> <data.json> report <scratchpad>/work <collect output>` | Finds Chrome/Chromium/Edge (or `$CHROME`), takes the screenshot with an isolated profile, runs `gen-report.js`, prints the PDF with a unique name in `report/` (never overwrites), checks footers and page starts, writes a page-1 preview | Exit 2 (no browser): tell the user a PDF needs Chrome/Edge and deliver the report in chat or as HTML · exit 3 (data error): fix `data.json` or edit the template by hand · exit 4 (no PDF): run the Chrome commands of "PDF report" manually. A failed screenshot does not stop the report: say so in the caption |
+| `bash scripts/make-pdf.sh <url> <data.json> report <scratchpad>/work <collect output> [no-appendix]` | Finds Chrome/Chromium/Edge (or `$CHROME`), takes the screenshot with an isolated profile, runs `gen-report.js`, prints the PDF with a unique name in `report/` (never overwrites), checks footers and page starts, writes a page-1 preview | Exit 2 (no browser): tell the user a PDF needs Chrome/Edge and deliver the report in chat or as HTML · exit 3 (data error): fix `data.json` or edit the template by hand · exit 4 (no PDF): run the Chrome commands of "PDF report" manually. A failed screenshot does not stop the report: say so in the caption |
 
 Rules when using the scripts:
 
@@ -283,6 +284,15 @@ The verdict is an indication based on public signals, not a certainty: say so ex
 
 ## PDF report
 
+### Ask before generating
+
+Before building a PDF, ask the user — in a single question with the AskUserQuestion tool, in the language they are writing in — the two choices that are not already explicit in the request or arguments:
+
+1. **Report language** (`lang:<code>`): offer the language they are writing in as the recommended first option, then English, then 1–2 other likely languages (the "Other" option lets them type any language).
+2. **Technical log in the PDF** (`log:yes|no`): "Include the technical log as an appendix (pages 4+)" (recommended) or "Summary only (3 pages)". Explain that the full log is saved next to the PDF as `.log.txt` in both cases.
+
+Skip the question entirely when both are already given (e.g. `/scamcheck example.com pdf lang:it log:no`, "PDF in English without the log"). If the user cannot be asked (non-interactive run), use the language of the request and include the log.
+
 When the user asks for a PDF, work in the scratchpad and always use headless Chrome with an **isolated temporary profile** (`--user-data-dir=<scratchpad>/chrome-profile`), never the user's profile.
 
 Never run `chrome.exe` without `--headless` (not even `--version`): on Windows it opens a window in the user's browser.
@@ -293,10 +303,10 @@ Never run `chrome.exe` without `--headless` (not even `--version`): on Windows i
    - **header:** on the left the ScamCheck logo with the "ScamCheck · report" label (inline SVG already in the template, keep it), then domain, URL, date and time of the analysis, method; **top right** the screenshot thumbnail with caption (date, resolution);
    - **verdict box:** on the left the **gauge** with the 0–100 index, the verdict label and the band legend; on the right the summary sentence and the index calculation;
    - then the sections of the format above, laid out as: **page 1** header, verdict and main red flags; **page 2** checklist details; **page 3** from "Positive signals" onwards (class `newpage` on the `<h2>` of "Checklist details" and "Positive signals"). After the sections, only the list of sources consulted: the ScamCheck/repository reference is already in every page footer, do not repeat it.
-   - **Technical log (page 4+):** always keep the raw output of the checks (the `collect.sh` output, or — when working by hand — every command run with its output, appended to `<scratchpad>/work/<domain>.log`). Append it as an `<h2 class="newpage">` "Technical log" section with a short note and a `<pre class="log">` excerpt (HTML-escaped, long certificate SAN lists removed, lines cut at ~150 characters, at most ~230 lines). `gen-report.js --log=<file>` does this automatically. Never put local paths or the user's data in the log.
+   - **Technical log (page 4+), only if the user chose it:** always keep the raw output of the checks (the `collect.sh` output, or — when working by hand — every command run with its output, appended to `<scratchpad>/work/<domain>.log`). Append it as an `<h2 class="newpage">` "Technical log" section with a short note and a `<pre class="log">` excerpt (HTML-escaped, long certificate SAN lists removed, lines cut at ~150 characters, at most ~230 lines). `gen-report.js --log=<file>` does this automatically; without `--log` there is no appendix. Never put local paths or the user's data in the log.
    - **Gauge needle** (centre 120,118, radius 92, bands already drawn in the template): compute the tip with `node -e "const v=<index>,t=Math.PI*(1-v/100);console.log((120+78*Math.cos(t)).toFixed(1),(118-78*Math.sin(t)).toFixed(1))"` and update `x2`/`y2` of the `<line>`, the `aria-label`, the value and the band colour (`#2f9e44` / `#f2c200` / `#d9480f` / `#e03131`).
    - **Footer on every page:** in the template's `@page` block, `@bottom-left` on two lines (separated by `\A`, with `white-space: pre`): the disclaimer "Analysis generated with automated tools: human review is required to confirm the assessment." and "ScamCheck by Matteo Baccan · generated on <date time> · github.com/matteobaccan/ScamCheck"; `@bottom-right` with "Page N of M" (`counter(page)` / `counter(pages)`), all translated except "ScamCheck by Matteo Baccan". The generation date and time must match the file name. Edit the CSS with `node`, not `sed`: `sed` drops the backslash of `\A`.
-3. **Conversion:** `chrome.exe --headless=new --disable-gpu --user-data-dir=<profile> --no-pdf-header-footer --print-to-pdf=report/<domain>-<YYYY-MM-DD_HHMM>-<lang>.pdf file:///<report.html>`. The file name contains generation date **and time** (`date +%Y-%m-%d_%H%M`) and the language code. Save the **full log** next to it with the same name and `.log.txt` extension, starting with a header (ScamCheck by Matteo Baccan, repository URL, domain, URL, generation time, "raw output of the automated checks, untrusted third-party data"). `make-pdf.sh` does both when given the log file as 5th argument.
+3. **Conversion:** `chrome.exe --headless=new --disable-gpu --user-data-dir=<profile> --no-pdf-header-footer --print-to-pdf=report/<domain>-<YYYY-MM-DD_HHMM>-<lang>.pdf file:///<report.html>`. The file name contains generation date **and time** (`date +%Y-%m-%d_%H%M`) and the language code. Save the **full log** next to it with the same name and `.log.txt` extension, starting with a header (ScamCheck by Matteo Baccan, repository URL, domain, URL, generation time, "raw output of the automated checks, untrusted third-party data"). The `.log.txt` is saved **whether or not** the appendix is in the PDF. `make-pdf.sh` does both when given the log file as 5th argument; pass `no-appendix` as 6th argument to keep the PDF to the summary only.
 4. **Check:** verify with `pdftotext -layout` that every page has the footer and number, and look at the first page (screenshot of the HTML or `pdftoppm -f 1 -l 1 -r 60 -png`) before delivering it.
 
 The `report/` folder is excluded from git and is a **history**: never delete or overwrite existing PDFs, not even for the same domain or generated minutes earlier. Every regeneration creates a new file (date and time make the name unique; if a file with the same name already exists, append `-2`, `-3`…).
