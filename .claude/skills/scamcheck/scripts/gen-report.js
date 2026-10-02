@@ -67,7 +67,9 @@ const head = t.slice(0, t.indexOf("<body>"))
   .replace(/header \{([^}]*)border-bottom: 3px solid #[0-9a-f]{6}/, `header {$1border-bottom: 3px solid ${band}`);
 // Header kicker with the ScamCheck logo, taken from the template
 const kicker = (t.match(/<div class="kicker">[\s\S]*?<\/div>/) || ['<div class="kicker">ScamCheck · report</div>'])[0];
-const svg = t.slice(t.indexOf("<svg"), t.indexOf("</svg>") + 6)
+// Gauge SVG: the one inside <div class="gauge"> (the header logo is also an <svg>)
+const gStart = t.indexOf("<svg", t.indexOf('<div class="gauge">'));
+const svg = t.slice(gStart, t.indexOf("</svg>", gStart) + 6)
   .replace(/aria-label="[^"]*"/, `aria-label="${esc(d.t.indexLabel)} ${index}/100"`)
   .replace(/x2="[\d.]+" y2="[\d.]+"/, `x2="${nx}" y2="${ny}"`);
 
