@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>ScamCheck: negozio-esempio.example</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 20mm;
+    @bottom-left { content: "Analisi generata con strumenti automatici: richiede una revisione umana per confermare la valutazione.\A ScamCheck · generato il GG/MM/AAAA HH:MM · github.com/matteobaccan/ScamCheck"; white-space: pre; font-family: "Segoe UI", sans-serif; font-size: 7.5pt; line-height: 1.5; color: #6b7385; }
+    @bottom-right { content: "Pagina " counter(page) " di " counter(pages); font-family: "Segoe UI", sans-serif; font-size: 8pt; color: #6b7385; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; color: #1d2433; font-size: 10.5pt; line-height: 1.45; margin: 0; }
+  header { border-bottom: 3px solid #d9480f; padding-bottom: 10px; margin-bottom: 16px; display: flex; gap: 16px; align-items: flex-start; }
+  .head-text { flex: 1; }
+  .meta { line-height: 1.6; }
+  .thumb { margin: 0; width: 62mm; flex: none; }
+  .thumb img { width: 100%; display: block; border: 1px solid #dde1e8; border-radius: 5px; }
+  .thumb figcaption { font-size: 7.5pt; color: #6b7385; margin-top: 3px; text-align: right; }
+  .gauge { width: 72mm; flex: none; text-align: center; background: #fafbfc; border: 1px solid #e5e8ee; border-radius: 8px; padding: 8px 8px 10px; }
+  .gauge svg { width: 100%; display: block; }
+  .gval { font-size: 24pt; font-weight: 800; color: #d9480f; line-height: 1; margin-top: -4px; }
+  .gval span { font-size: 11pt; color: #6b7385; font-weight: 600; }
+  .glbl { font-size: 10pt; font-weight: 700; color: #d9480f; margin-top: 4px; }
+  .glegend { font-size: 7.5pt; color: #6b7385; margin-top: 6px; }
+  .glegend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin: 0 2px 0 5px; vertical-align: 0; }
+  .summary .pts { font-size: 8.5pt; color: #6b7385; margin-top: 8px; }
+  .kicker { font-size: 8.5pt; letter-spacing: .12em; text-transform: uppercase; color: #6b7385; }
+  h1 { font-size: 22pt; margin: 2px 0 4px; }
+  .meta { color: #6b7385; font-size: 9pt; }
+  .verdict { display: flex; gap: 14px; align-items: stretch; margin: 14px 0 18px; }
+  .badge { background: #fff4e6; border: 1.5px solid #e8590c; border-radius: 8px; padding: 10px 14px; min-width: 190px; }
+  .badge .lvl { font-size: 15pt; font-weight: 700; color: #d9480f; }
+  .badge .pts { font-size: 9pt; color: #6b7385; }
+  .summary { flex: 1; background: #f5f6f8; border-radius: 8px; padding: 10px 14px; }
+  h2 { font-size: 13pt; margin: 20px 0 8px; padding-bottom: 3px; border-bottom: 1px solid #dde1e8; break-after: avoid; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  li { margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.2pt; }
+  th, td { text-align: left; padding: 5px 7px; border-bottom: 1px solid #e5e8ee; vertical-align: top; }
+  th { background: #f0f2f5; font-weight: 600; }
+  tr { break-inside: avoid; }
+  .s { font-weight: 700; white-space: nowrap; }
+  .ok { color: #2b8a3e; } .warn { color: #e67700; } .bad { color: #c92a2a; } .na { color: #868e96; }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: #f0f2f5; padding: 0 3px; border-radius: 3px; }
+  .note { background: #f5f6f8; border-left: 3px solid #868e96; padding: 8px 12px; font-size: 9.5pt; margin-top: 10px; }
+  .legend { font-size: 8.5pt; color: #6b7385; margin-top: 6px; }
+  .shot { margin: 0 0 6px; break-inside: avoid; }
+  .shot img { width: 100%; border: 1px solid #dde1e8; border-radius: 6px; display: block; }
+  .shot figcaption { font-size: 8.5pt; color: #6b7385; margin-top: 4px; }
+  .newpage { break-before: page; margin-top: 0; }
+  footer { margin-top: 22px; font-size: 8.5pt; color: #6b7385; border-top: 1px solid #dde1e8; padding-top: 8px; }
+</style>
+</head>
+<body>
+<!--
+  MODELLO DI ESEMPIO con dati FITTIZI (dominio riservato .example, RFC 2606).
+  Sostituire tutti i contenuti con quelli dell’analisi reale; mantenere struttura, classi e impaginazione.
+  home.png = screenshot della home da affiancare a questo file.
+-->
+<header>
+  <div class="head-text">
+    <div class="kicker">ScamCheck · report</div>
+    <h1>negozio-esempio.example</h1>
+    <div class="meta">URL analizzato: https://negozio-esempio.example/<br>Data analisi: GG mese AAAA, ore HH:MM<br>Metodo: checklist ScamCheck (7 sezioni)</div>
+  </div>
+  <figure class="thumb">
+    <img src="home.png" alt="Screenshot della home di negozio-esempio.example">
+    <figcaption>Home catturata il GG/MM/AAAA · 1280×900</figcaption>
+  </figure>
+</header>
+
+<div class="verdict">
+  <div class="gauge">
+    <svg viewBox="0 0 240 140" role="img" aria-label="Indice di rischio truffa 66 su 100">
+      <g fill="none" stroke-width="18">
+        <path d="M28.0 116.3 A92 92 0 0 1 32.0 91.2" stroke="#2f9e44"/>
+        <path d="M33.1 87.9 A92 92 0 0 1 64.5 44.6" stroke="#f2c200"/>
+        <path d="M67.3 42.6 A92 92 0 0 1 193.4 62.5" stroke="#f76707"/>
+        <path d="M195.4 65.3 A92 92 0 0 1 212.0 116.3" stroke="#e03131"/>
+      </g>
+      <g font-size="9" fill="#6b7385" text-anchor="middle" font-family="Segoe UI, sans-serif">
+        <text x="8.0" y="121.0">0</text><text x="13.5" y="86.4">10</text><text x="54.2" y="30.4">30</text><text x="210.6" y="55.2">80</text><text x="232.0" y="121.0">100</text>
+      </g>
+      <line x1="120" y1="118" x2="157.6" y2="49.6" stroke="#1d2433" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="120" cy="118" r="8" fill="#1d2433"/>
+    </svg>
+    <div class="gval">66<span>/100</span></div>
+    <div class="glbl">ALTO RISCHIO · poco affidabile</div>
+    <div class="glegend"><i style="background:#2f9e44"></i>basso <i style="background:#f2c200"></i>sospetto <i style="background:#f76707"></i>alto <i style="background:#e03131"></i>truffa</div>
+  </div>
+  <div class="summary">
+    <strong>In una frase:</strong> e-commerce di elettronica aperto da tre settimane, senza ragione sociale né P.IVA, con sconti del 70% su marchi noti e pagamento con carta che al checkout risulta non disponibile. <strong>Nessuna blacklist</strong> lo segnala ancora, ma i segnali sono tipici dei fake shop.
+    <div class="pts">Indice = punti di rischio netti × 3 (22 × 3 = 66), massimo 79 senza red flag critici. Nessun red flag critico rilevato.</div>
+  </div>
+</div>
+
+<h2>Red flag principali</h2>
+<ul>
+  <li><strong>Dominio di 3 settimane.</strong> RDAP: registrazione <code>AAAA-MM-GG</code>, scadenza dopo un solo anno. Nessuna copia su Wayback Machine.</li>
+  <li><strong>Nessuna identità legale.</strong> Footer con solo "© Negozio Esempio": mancano ragione sociale, P.IVA e indirizzo. La privacy policy non indica il titolare del trattamento.</li>
+  <li><strong>Prezzi non plausibili.</strong> Smartphone di marca a 299 € contro un prezzo di mercato di circa 1.000 €, banner "liquidazione totale".</li>
+  <li><strong>Metodi di pagamento incoerenti.</strong> In home compaiono i loghi di carte e PayPal, ma le condizioni indicano solo bonifico per "problemi temporanei" con le carte.</li>
+</ul>
+
+<h2 class="newpage">Dettaglio della checklist</h2>
+<table>
+  <thead><tr><th style="width:30%">Controllo</th><th style="width:9%">Esito</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>1.1 Età del dominio</td><td class="s bad">❌</td><td>3 settimane</td></tr>
+    <tr><td>1.2 Scadenza</td><td class="s warn">⚠️</td><td>Registrato per un solo anno</td></tr>
+    <tr><td>1.3 Imitazione di marchi</td><td class="s ok">✅</td><td>Non imita brand noti nel dominio</td></tr>
+    <tr><td>1.4 Estensione (TLD)</td><td class="s ok">✅</td><td>Nessuna estensione abusata</td></tr>
+    <tr><td>1.5 WHOIS / registrar</td><td class="s warn">⚠️</td><td>Registrant oscurato e azienda non identificabile</td></tr>
+    <tr><td>1.6 Redirect</td><td class="s ok">✅</td><td>Nessun redirect</td></tr>
+    <tr><td>2.1 HTTPS</td><td class="s ok">✅</td><td>Certificato valido</td></tr>
+    <tr><td>2.3 Storico del sito</td><td class="s warn">⚠️</td><td>Nessuna copia su Wayback Machine</td></tr>
+    <tr><td>2.4 Popolarità</td><td class="s na">➖</td><td>Fuori dalla classifica Tranco (nessun malus)</td></tr>
+    <tr><td>3.1 Blacklist</td><td class="s ok">✅</td><td>Nessun rilevamento su Sucuri e URLVoid</td></tr>
+    <tr><td>3.2 Punteggi di terzi</td><td class="s warn">⚠️</td><td>Esempio: Trust Score 38/100</td></tr>
+    <tr><td>3.3–3.4 Reputazione e recensioni</td><td class="s warn">⚠️</td><td>Nessuna recensione esterna</td></tr>
+    <tr><td>4.1 Ragione sociale e sede</td><td class="s bad">❌</td><td>Assenti</td></tr>
+    <tr><td>4.2 Partita IVA</td><td class="s bad">❌</td><td>Assente</td></tr>
+    <tr><td>4.4 Contatti</td><td class="s warn">⚠️</td><td>Solo email gratuita e chat WhatsApp</td></tr>
+    <tr><td>5.2 Prezzi</td><td class="s bad">❌</td><td>Sconti del 70% su elettronica di marca</td></tr>
+    <tr><td>5.3 Urgenza e pressione</td><td class="s warn">⚠️</td><td>Countdown e "solo 2 pezzi rimasti"</td></tr>
+    <tr><td>5.5 Policy legali</td><td class="s warn">⚠️</td><td>Testi copiati da un altro negozio</td></tr>
+    <tr><td>6.1 Metodi di pagamento</td><td class="s warn">⚠️</td><td>Solo bonifico</td></tr>
+    <tr><td>6.2 Coerenza dei pagamenti</td><td class="s warn">⚠️</td><td>Loghi di carte e PayPal non disponibili al checkout</td></tr>
+    <tr><td>7.1–7.3 Segnali tecnici</td><td class="s ok">✅</td><td>Nessuno script sospetto</td></tr>
+  </tbody>
+</table>
+<div class="legend">✅ ok · ⚠️ sospetto (1 punto) · ❌ red flag (3 punti) · ➕ positivo (−2) · ➖ non verificabile</div>
+
+<h2 class="newpage">Segnali positivi</h2>
+<ul>
+  <li>HTTPS valido, nessuna blacklist, nessuno script sospetto.</li>
+</ul>
+
+<h2>Cosa fare</h2>
+<ul>
+  <li><strong>Non pagare con bonifico</strong>: non c’è modo di recuperare i soldi.</li>
+  <li>Cercare lo stesso prodotto su negozi noti: un prezzo troppo basso è il segnale più forte.</li>
+  <li>Se si è già pagato: contattare subito la banca, conservare ricevute e screenshot, fare denuncia su commissariatodips.it.</li>
+</ul>
+
+<h2>Limiti dell’analisi</h2>
+<ul>
+  <li>Elencare i controlli ➖ non eseguiti e perché (es. chiavi API mancanti, servizi non raggiungibili).</li>
+  <li>Nessun form compilato, nessun login, nessun file scaricato.</li>
+</ul>
+<div class="note">Questo report è un’indicazione basata su segnali pubblici raccolti il GG/MM/AAAA, non una certezza né un parere legale.</div>
+
+<footer>Fonti: RDAP, certificato TLS del sito, Wayback Machine CDX, Sucuri SiteCheck, URLVoid, pagine pubbliche del sito, ricerche web.</footer>
+</body>
+</html>
