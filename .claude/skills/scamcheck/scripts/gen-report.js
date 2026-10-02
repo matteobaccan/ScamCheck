@@ -65,6 +65,8 @@ const head = t.slice(0, t.indexOf("<body>"))
   .replace(/\.gval \{([^}]*)color: #[0-9a-f]{6}/, `.gval {$1color: ${band}`)
   .replace(/\.glbl \{([^}]*)color: #[0-9a-f]{6}/, `.glbl {$1color: ${band}`)
   .replace(/header \{([^}]*)border-bottom: 3px solid #[0-9a-f]{6}/, `header {$1border-bottom: 3px solid ${band}`);
+// Header kicker with the ScamCheck logo, taken from the template
+const kicker = (t.match(/<div class="kicker">[\s\S]*?<\/div>/) || ['<div class="kicker">ScamCheck · report</div>'])[0];
 const svg = t.slice(t.indexOf("<svg"), t.indexOf("</svg>") + 6)
   .replace(/aria-label="[^"]*"/, `aria-label="${esc(d.t.indexLabel)} ${index}/100"`)
   .replace(/x2="[\d.]+" y2="[\d.]+"/, `x2="${nx}" y2="${ny}"`);
@@ -79,7 +81,7 @@ const rows = d.checks.map(([c, s, n]) => {
 const body = `<body>
 <header>
   <div class="head-text">
-    <div class="kicker">ScamCheck · report</div>
+    ${kicker}
     <h1>${d.domain}</h1>
     <div class="meta">${d.t.url}: ${d.url}<br>${d.t.date}: ${d.analysisDate}<br>${d.t.method}</div>
   </div>

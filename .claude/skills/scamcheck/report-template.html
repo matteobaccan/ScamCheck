@@ -24,7 +24,8 @@
   .glegend { font-size: 7.5pt; color: #6b7385; margin-top: 6px; }
   .glegend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin: 0 2px 0 5px; vertical-align: 0; }
   .summary .pts { font-size: 8.5pt; color: #6b7385; margin-top: 8px; }
-  .kicker { font-size: 8.5pt; letter-spacing: .12em; text-transform: uppercase; color: #6b7385; }
+  .kicker { font-size: 8.5pt; letter-spacing: .12em; text-transform: uppercase; color: #6b7385; display: flex; align-items: center; gap: 8px; }
+  .kicker .brand { width: 26px; height: 26px; flex: none; }
   h1 { font-size: 22pt; margin: 2px 0 4px; }
   .meta { color: #6b7385; font-size: 9pt; }
   .verdict { display: flex; gap: 14px; align-items: stretch; margin: 14px 0 18px; }
@@ -62,7 +63,7 @@
 -->
 <header>
   <div class="head-text">
-    <div class="kicker">ScamCheck · report</div>
+    <div class="kicker"><svg class="brand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="scLogoBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14213d"/><stop offset="1" stop-color="#0b1324"/></linearGradient><linearGradient id="scLogoShield" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f3a68"/><stop offset="1" stop-color="#152a4d"/></linearGradient></defs><rect width="256" height="256" rx="56" fill="url(#scLogoBg)"/><path d="M128 30 L204 58 V122 C204 172 172 206 128 226 C84 206 52 172 52 122 V58 Z" fill="url(#scLogoShield)" stroke="#5b8def" stroke-width="6" stroke-linejoin="round"/><g fill="none" stroke-width="14" stroke-linecap="butt"><path d="M76 150 A52 52 0 0 1 82.9 124" stroke="#2f9e44"/><path d="M84.3 121.7 A52 52 0 0 1 108.4 101.8" stroke="#f2c200"/><path d="M110.9 100.9 A52 52 0 0 1 166.8 115.6" stroke="#f76707"/><path d="M168.6 117.7 A52 52 0 0 1 180 150" stroke="#e03131"/></g><line x1="128" y1="150" x2="163" y2="118" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><circle cx="128" cy="150" r="10" fill="#ffffff"/><path d="M104 182 L122 198 L154 168" fill="none" stroke="#7ee2a8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ScamCheck · report</span></div>
     <h1>example-shop.example</h1>
     <div class="meta">Analysed URL: https://example-shop.example/<br>Analysis date: YYYY-MM-DD, HH:MM<br>Method: ScamCheck checklist (7 sections)</div>
   </div>
