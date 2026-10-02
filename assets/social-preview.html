@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ScamCheck social preview</title>
+<style>
+  html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    font-family: "Segoe UI", system-ui, sans-serif; color: #e8eefc;
+    background: radial-gradient(900px 500px at 85% 20%, rgba(91,141,239,.25), transparent 60%), linear-gradient(135deg, #14213d, #0b1324);
+    display: flex; align-items: center; gap: 64px; padding: 0 88px; box-sizing: border-box;
+  }
+  img { width: 300px; height: 300px; flex: none; filter: drop-shadow(0 20px 50px rgba(0,0,0,.45)); }
+  h1 { font-size: 96px; margin: 0; letter-spacing: -1px; font-weight: 800; color: #fff; }
+  h1 span { color: #7ea8ff; }
+  p { font-size: 34px; line-height: 1.35; margin: 18px 0 30px; color: #c3cee6; max-width: 760px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 12px; max-width: 780px; }
+  .tags b { font-weight: 600; font-size: 22px; padding: 8px 16px; border-radius: 999px; background: rgba(126,168,255,.14); border: 1px solid rgba(126,168,255,.35); color: #dce6ff; }
+  .repo { position: absolute; bottom: 34px; right: 88px; font-size: 22px; color: #8fa3c9; font-family: Consolas, monospace; }
+</style>
+</head>
+<body>
+  <img src="logo.svg" alt="">
+  <div>
+    <h1>Scam<span>Check</span></h1>
+    <p>A Claude Code skill that tells you if a website is a scam, with a reasoned verdict and a PDF report.</p>
+    <div class="tags"><b>70+ checks</b><b>30 free sources</b><b>0–100 risk index</b><b>Any language</b></div>
+  </div>
+  <div class="repo">github.com/matteobaccan/ScamCheck</div>
+</body>
+</html>

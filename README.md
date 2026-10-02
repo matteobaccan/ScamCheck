@@ -1,4 +1,13 @@
-# ScamCheck
+<p align="center">
+  <img src="assets/logo.svg" alt="ScamCheck logo" width="160">
+</p>
+
+<h1 align="center">ScamCheck</h1>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-7ea8ff.svg">
+</p>
 
 A [Claude Code](https://claude.com/claude-code) skill that checks whether a website is a likely scam (fake shops, phishing, fake investment or crypto platforms, fake services) and produces a reasoned verdict, optionally as a PDF report in any language.
 
