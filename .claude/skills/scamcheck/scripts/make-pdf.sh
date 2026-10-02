@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# ScamCheck - https://github.com/matteobaccan/ScamCheck
+# Author: Matteo Baccan - MIT License
+#
 # ScamCheck helper (optional): screenshot + HTML report + PDF in one go.
 #
 # Usage: bash make-pdf.sh <url> <data.json> <report_dir> [work_dir]

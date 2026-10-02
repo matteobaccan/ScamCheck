@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// ScamCheck - https://github.com/matteobaccan/ScamCheck
+// Author: Matteo Baccan - MIT License
+//
 // ScamCheck helper (optional): fills report-template.html with the analysis data and writes the report HTML.
 //
 // Usage: node gen-report.js <data.json> <out.html> ["<generation date time>"] [template.html]

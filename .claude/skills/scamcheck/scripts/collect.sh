@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# ScamCheck - https://github.com/matteobaccan/ScamCheck
+# Author: Matteo Baccan - MIT License
+#
 # ScamCheck helper (optional): runs every no-key check for one domain and prints a plain-text summary.
 #
 # Usage: bash collect.sh <domain> [work_dir]
